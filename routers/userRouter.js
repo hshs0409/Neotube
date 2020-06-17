@@ -1,22 +1,17 @@
 import express from "express";
 import routes from "../routes";
+import {
+  users,
+  userDetail,
+  editProfile,
+  changePassword,
+} from "../controllers/userController";
 
 const userRouter = express.Router();
 
-userRouter.get(routes.users, (res, req) => res.setEncoding("user"));
-userRouter.get(routes.userDetail, (res, req) => res.setEncoding("User Detail"));
-userRouter.get(routes.editProfile, (res, req) =>
-  res.setEncoding("Edit Profile")
-);
-userRouter.get(routes.changePassword, (res, req) =>
-  res.setEncoding("Change Password")
-);
+userRouter.get(routes.users, users);
+userRouter.get(routes.userDetail, userDetail);
+userRouter.get(routes.editProfile, editProfile);
+userRouter.get(routes.changePassword, changePassword);
 
 export default userRouter;
-/*
-MVC
-
-MODEL = DATA
-VIEW = HOW DOES DATA LOOK
-CONTROL = FUNCTION THAT LOOKS FOR THE DATA
-*/
