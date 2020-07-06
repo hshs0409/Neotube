@@ -10,6 +10,7 @@ const VideoSchema = new mongoose.Schema({
     required: "Title is required",
   },
   description: String,
+  thumbnail: String,
   views: {
     type: Number,
     default: 0,
@@ -24,6 +25,10 @@ const VideoSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const model = mongoose.model("Video", VideoSchema);

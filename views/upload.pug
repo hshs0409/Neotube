@@ -6,6 +6,11 @@ block content
             div.fileUpload
                 label(for="file") Video File
                 input(type="file", id="file", name="videoFile", required=true, accept="video/*")
+            div.fileUpload
+                label(for="file") Thumbnail
+                input(type="file", id="file", name="thumbnail" ,accept="image/*")
             input(type="text", placeholder="Title", name="title", required=true)
             textarea(name="description", placeholder="Description", required=true)
             input(type="submit", value="Upload Video")
+
+//- Plz  add Thumnail 
