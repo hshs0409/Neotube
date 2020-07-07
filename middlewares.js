@@ -32,4 +32,5 @@ export const uploadVideo = multerVideo.fields([
   { name: "videoFile", maxCount: 1 },
   { name: "thumbnail", maxCount: 1 },
 ]);
+
 export const uploadAvatar = multerAvatar.single("avatar");
