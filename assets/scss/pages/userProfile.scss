@@ -18,7 +18,10 @@
     flex-direction: column;
     align-items: center;
     a:not(:last-child) {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
+  }
+  .home-videos {
+    margin-top: 20px;
   }
 }
