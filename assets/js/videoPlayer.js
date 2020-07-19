@@ -6,10 +6,30 @@ const fullScreenBtn = document.getElementById("jsFullScreen");
 const totalTime = document.getElementById("totalTime");
 const currentTime = document.getElementById("currentTime");
 const volumeRange = document.getElementById("jsVolume");
+const views = document.querySelectorAll("#videoViews");
+const descriptionBtn = document.querySelector(".video__description-btn");
+const descriptionText = document.querySelector(".video__description-text");
+
+const handleViewComma = () => {
+  views.forEach((view) => {
+    let text = view.innerText;
+    if (text.includes("views")) {
+      text = text.replace("views", "");
+      let viewsNum = text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      console.log(viewsNum);
+      view.innerText = `${viewsNum} views |`;
+    }
+  });
+};
+
+const handleDescriptionBtn = () => {
+  descriptionBtn.classList.toggle("clicked");
+  descriptionText.classList.toggle("clamp");
+};
 
 const registerView = () => {
   const videoId = window.location.href.split("/videos/")[1];
-  fetch(`/api/${sth}/view`, { method: "POST" });
+  fetch(`/api/${videoId}/view`, { method: "POST" });
 };
 
 function handlePlayClick() {
@@ -125,8 +145,13 @@ function init() {
   videoPlayer.addEventListener("loadedmetadata", setTotalTime);
   videoPlayer.addEventListener("ended", handleEnded);
   volumeRange.addEventListener("input", handleVolumeDrag);
+  descriptionBtn.addEventListener("click", handleDescriptionBtn);
 }
 
 if (videoContainer) {
   init();
+}
+
+if (views) {
+  handleViewComma();
 }

@@ -9,9 +9,13 @@ block content
             h5 No Video result
         each video in videos
             +videoBlock({
+                id:video.id,
                 title:video.title,
                 views:video.views,
-                videoFile:video.videoFile,
-                id:video.id,
-                thumbnail:video.thumbnail
+                videoFile:video.fileUrl,
+                thumbnail:video.thumbnail,
+                createdAt:video.createdAt,
+                creatorName:video.creator.name,
+                creatorId:video.creator.id,
+                avatarUrl:video.creator.avatarUrl
             })

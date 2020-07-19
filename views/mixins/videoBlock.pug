@@ -5,8 +5,17 @@ mixin videoBlock(video = {})
                 video.videoBlock__thumbnail(src=`/${video.videoFile}`, controls=false ,poster=`/${video.thumbnail}`)
             else
                 video.videoBlock__thumbnail(src=`/${video.videoFile}`, controls=false)
-            h4.videoBlock__title=video.title
-            if video.views === 1
-                h6.videoBlock__views 1 view
-            else
-                h6.videoBlock__views #{video.views} views
+        .videoBlock__detail
+            .videoBlock__detail-column
+                img.u-avatar(src=`/${video.avatarUrl}`)
+                h4.videoBlock__title=video.title
+            .videoBlock__detail-column
+                a(href=`${routes.userDetail(video.creatorId)}`) #{video.creatorName}
+            .videoBlock__detail-column
+                if video.views === 1
+                    h6.videoBlock__views#videoViews 1 view
+                    h6.videoBlock__createdAt=moment(video.createdAt).startOf('day').fromNow()
+                else
+                    h6.videoBlock__views#videoViews #{video.views} views
+                    h6.videoBlock__createdAt=moment(video.createdAt).startOf('day').fromNow()
+                

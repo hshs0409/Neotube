@@ -3,10 +3,11 @@ header.header
             .header__column
                 a(href=routes.home)
                     i.fab.fa-youtube
-            .header__column
+                    span NeoTube
+            .header__column#headerSearch
                 form(action=routes.search, method="get")
                     input(type="text", placeholder="Search by term...", name="term")
-            .header__column
+            .header__column#headerMenu
                 ul
                     if !loggedUser
                         li
@@ -20,3 +21,6 @@ header.header
                             a(href=routes.userDetail(loggedUser.id)) Profile
                         li
                             a(href=routes.logout) Log Out
+    .header__toggleBtn
+        a(href="#")
+            i.fas.fa-bars 

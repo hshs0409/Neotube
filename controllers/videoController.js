@@ -1,12 +1,15 @@
 import Video from "../models/Video";
+import moment from "moment";
 import Comment from "../models/Comment";
+import User from "../models/User";
 import routes from "../routes";
 
 export const home = async (req, res) => {
   try {
     // Video의 All Elements get
-    const videos = await Video.find({}).sort({ _id: -1 });
-    res.render("home", { pageTitle: "Home", videos });
+    const videos = await Video.find({}).sort({ _id: -1 }).populate("creator");
+    console.log(videos[0].creator.avatarUrl);
+    res.render("home", { pageTitle: "Home", videos, moment });
   } catch (error) {
     console.log(error);
     res.render("home", { pageTitle: "Home", videos: [] });
@@ -21,11 +24,12 @@ export const search = async (req, res) => {
   try {
     videos = await Video.find({
       title: { $regex: searchingBy, $options: "i" },
-    });
+    }).populate("creator");
+    console.log(videos);
   } catch (error) {
     console.log(error);
   }
-  res.render("search", { pageTitle: "Search", searchingBy, videos });
+  res.render("search", { pageTitle: "Search", searchingBy, videos, moment });
 };
 
 export const getUpload = (req, res) =>
@@ -56,8 +60,17 @@ export const videoDetail = async (req, res) => {
   try {
     const video = await Video.findById(id)
       .populate("creator")
-      .populate("comments");
-    res.render("videoDetail", { pageTitle: video.title, video });
+      .populate({
+        path: "comments",
+        populate: { path: "creator" },
+      });
+
+    res.render("videoDetail", {
+      pageTitle: video.title,
+      video,
+      videoComments: video.comments,
+      moment,
+    });
   } catch (error) {
     res.redirect(routes.home);
   }
@@ -69,7 +82,7 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    if (video.creator !== req.user.id) {
+    if (String(video.creator) !== req.user.id) {
       throw Error();
     } else {
       res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
@@ -139,6 +152,21 @@ export const postAddComment = async (req, res) => {
     });
     video.comments.push(newComment.id);
     video.save();
+  } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
+};
+
+export const postDeleteComment = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    await Comment.findByIdAndDelete({ _id: id });
+    await Video.findOneAndUpdate({ _id: id });
+    await User.findOneAndUpdate({ _id: id });
   } catch (error) {
     res.status(400);
   } finally {

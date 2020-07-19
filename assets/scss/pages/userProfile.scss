@@ -15,10 +15,10 @@
   }
   .user-profile__btns {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    a:not(:last-child) {
-      margin-bottom: 30px;
+    justify-content: center;
+    width: 100%;
+    a {
+      margin-left: 48px;
     }
   }
   .home-videos {

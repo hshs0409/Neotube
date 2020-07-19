@@ -1,5 +1,8 @@
 .u-avatar {
   height: 80px;
+  width: 80px;
+  object-fit: cover;
+  object-position: top;
   background-color: $red;
   border-radius: 50%;
 }

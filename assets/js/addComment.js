@@ -1,6 +1,5 @@
 import axios from "axios";
 const addCommentForm = document.getElementById("jsAddComment");
-const commentText = addCommentForm.querySelector("input");
 const commentList = document.getElementById("jsCommentList");
 const commentNumber = document.getElementById("jsCommentNumber");
 
@@ -9,11 +8,16 @@ const increaseNumber = () => {
 };
 
 const addComment = (comment) => {
-  const li = document.createElement("li");
-  const span = document.createElement("span");
-  span.innerHTML = comment;
-  li.appendChild(span);
-  commentList.prepend(li);
+  const currentCommentColumn = document.querySelector(".comment__column");
+  console.log(typeof currentCommentColumn);
+  const newComment = currentCommentColumn.cloneNode(true);
+  const spans = newComment.querySelectorAll("span");
+  const a = newComment.querySelector("a");
+  a.innerText = "hshs0409";
+  spans[0].innerText = "just Now";
+  spans[1].innerText = comment;
+  console.log(newComment);
+  commentList.prepend(newComment);
   increaseNumber();
 };
 
@@ -31,9 +35,10 @@ const sendComment = async (comment) => {
 
 const handleSubmit = (event) => {
   event.preventDefault();
-  const comment = commentText.value;
+  const commentInput = addCommentForm.querySelector("input");
+  const comment = commentInput.value;
   sendComment(comment);
-  commentText.value = "";
+  commentInput.value = "";
 };
 
 function init() {

@@ -12,14 +12,29 @@ block content
                 a(href=routes.editVideo(video.id))
                     button Edit video
             h5.video__title=video.title
-            p.video__description=video.description
-            if video.views === 1
-                span.video__views 1 view
-            else 
-                span.video__views #{video.views} views
+            .video__detail
+                .video__column
+                    if video.views === 1
+                        span.video__views#videoViews 1 view
+                    else 
+                        span.video__views#videoViews #{video.views} views
+                    
+                    .video__date=moment(video.createdAt).format('YYYY. MM .DD')
+                .video__column
+                    i.fas.fa-thumbs-up
+                    i.fas.fa-thumbs-down
+                    i.fas.fa-share
+                    i.fas.fa-plus
+                    i.fab.fa-font-awesome-flag 
+                        
+        .video__info-detail
             .video__author
-                |Uploaded by 
+                img.u-avatar(src=`/${video.creator.avatarUrl}`)
                 a(href=routes.userDetail(video.creator.id))=video.creator.name
+            .video__description
+                pre.video__description-text.clamp=video.description
+                button.video__description-btn
+                    i.fas.fa-caret-down
         .video__comments
                 if video.comments.length === 1
                     span.video__comment-number
@@ -30,8 +45,23 @@ block content
                         span#jsCommentNumber=video.comments.length
                         |  comments
                 form.add__comment#jsAddComment
-                    input(type="text", placeholder="Add a comment")
+                    if loggedUser
+                        .add__comment-user
+                            img.u-avatar(src=`/${loggedUser.avatarUrl}`)
+                            a(href=routes.userDetail(loggedUser.id))=loggedUser.name
+                        .add__comment-input
+                            input.input(type="text", placeholder="Add a comment")
                 ul.video__comments-list#jsCommentList
                     each comment in video.comments.reverse()
-                        li
-                            span=comment.text
+                        .comment__column
+                            li
+                                img.u-avatar(src=`/${comment.creator.avatarUrl}`)
+                                .comment__detail
+                                    .comment__detail-author
+                                        a(href=routes.userDetail(comment.creator.id))=comment.creator.name
+                                        span=moment(comment.createdAt).startOf('hour').fromNow()
+                                    .comment__detail-text
+                                        span=comment.text
+                                if loggedUser && video.creator.id === loggedUser.id
+                                a(href=`/api/${video.comments[0].id}/comment`)
+                                    span.comment__deleteBtn ❌

@@ -1,62 +1,149 @@
 .video-detail__container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   .video__info {
-    width: 100%;
-    max-width: 850px;
-    margin-top: 25px;
-    button {
-      width: 100px;
-      margin-bottom: 25px;
+    .video__title {
+      margin-top: 8px;
+      font-size: 24px;
+      font-weight: 600;
     }
-    .video__author {
-      a {
-        color: black;
-        font-size: 15px;
-        font-weight: bold;
+    .video__detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0px;
+      font-size: 16px;
+      .video__column:first-child {
+        display: flex;
+        flex-direction: row;
+        .video__views {
+          margin-right: 5px;
+        }
+      }
+      .video__column:last-child {
+        i {
+          margin-right: 20px;
+          cursor: pointer;
+          font-size: 24px;
+        }
       }
     }
-    .video__title,
-    .video__views,
+  }
+  .video__info-detail {
+    border-bottom: 0.5px solid #e6e6e6;
+    border-top: 0.5px solid #e6e6e6;
+    padding: 20px 50px;
+    .video__author {
+      display: flex;
+      align-items: center;
+      color: $black;
+      margin-bottom: 21px;
+      font-weight: 600;
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+    }
     .video__description {
-      display: block;
-      margin-bottom: 15px;
-    }
-    .video__title {
-      font-size: 22px;
-      font-weight: 300;
-    }
-    .video__views {
-      font-size: 14px;
-    }
-    .video__description {
-      font-size: 16px;
+      display: flex;
+      padding: 0px 50px;
+      line-height: 1.5;
+      .video__description-text.clamp {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        font-weight: 400;
+        line-height: 1.5;
+      }
+      .video__description-btn {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: black;
+        opacity: 0.6;
+        transition: transform 300ms ease-in-out;
+        outline: none;
+        -webkit-box-shadow: none;
+        &.clicked {
+          transform: rotate(180deg);
+        }
+      }
     }
   }
   .video__comments {
-    margin-top: 25px;
-    text-align: center;
+    margin-top: 16px;
+    padding: 0 30px;
     .video__comment-number {
-      font-size: 18px;
+      font-weight: 600;
     }
     .add__comment {
-      margin-top: 25px;
-      width: 100%;
-      input {
+      margin: 16px 0;
+      display: flex;
+      align-items: center;
+      .add__comment-user {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin-right: 8px;
+        font-weight: 600;
+        .u-avatar {
+          width: 40px;
+          height: 40px;
+          margin-bottom: 4px;
+        }
+      }
+      .add__comment-input {
         width: 100%;
+        input {
+          max-width: 1080px;
+          padding: 8px;
+          border: none;
+          transition: 0.5s ease-in-out all;
+        }
+        input:focus {
+          outline: none;
+          border-bottom: 2px solid black;
+          transform: scale(1);
+        }
       }
     }
     .video__comments-list {
-      margin-top: 50px;
-      li {
-        background-color: #3498db;
-        color: white;
-        padding: 15px;
-        border-radius: 20px;
-        border-bottom-left-radius: 0px;
-        &:not(:last-child) {
-          margin-bottom: 15px;
+      .comment__column {
+        li {
+          display: flex;
+          align-items: center;
+          margin-bottom: 16px;
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 8px;
+          }
+          .comment__detail {
+            display: flex;
+            flex-direction: column;
+            margin-right: 8px;
+            .comment__detail-author {
+              font-size: 14px;
+              margin-bottom: 5px;
+              a {
+                font-weight: 600;
+                margin-right: 8px;
+              }
+              span {
+                opacity: 0.8;
+              }
+            }
+            .comment__detail-text {
+              font-size: 16px;
+              font-weight: 400;
+            }
+          }
         }
       }
     }

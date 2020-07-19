@@ -1,6 +1,7 @@
 import passport from "passport";
 import routes from "../routes";
 import User from "../models/User";
+import moment from "moment";
 
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join" });
@@ -19,6 +20,7 @@ export const postJoin = async (req, res, next) => {
         name,
         email,
       });
+      console.log(user);
       await User.register(user, password);
       next();
     } catch (error) {
@@ -47,6 +49,7 @@ export const githubLoginCallback = async (
   const {
     _json: { id, avatar_url, name, email },
   } = profile;
+  console.log(profile);
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -55,7 +58,7 @@ export const githubLoginCallback = async (
       return cb(null, user);
     }
     const newUser = await User.create({
-      email: "0409hshs@gmail.com",
+      email,
       name,
       githubId: id,
       avatarUrl: avatar_url,
@@ -101,8 +104,13 @@ export const userDetail = async (req, res) => {
     params: { id },
   } = req;
   try {
-    const user = await User.findById(id).populate("videos");
-    res.render("userDetail", { pageTitle: "User Detail", user });
+    const user = await User.findById(id)
+      .populate("videos")
+      .populate({
+        path: "videos",
+        populate: { path: "creator" },
+      });
+    res.render("userDetail", { pageTitle: "User Detail", user, moment });
   } catch (error) {
     res.redirect(routes.home);
   }
