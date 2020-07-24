@@ -10,8 +10,8 @@
     "build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.config.js'",
     "copyAll": "shx cp -R src/static build && shx cp -R src/views build",
     "build": "npm run build:server && npm run build:assets && npm run copyAll",
-    "prebuild": "rd /s \"build\"",
-    "start": "node build/init.js",
+    "prebuild": "rm -rf build",
+    "start": "PRODUCTION=true node build/init.js",
     "prestart": "npm run build"
   },
   "author": "Lee Hyun Se",
@@ -45,6 +45,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
+    "node": "^14.5.0",
     "node-sass": "^4.14.1",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
