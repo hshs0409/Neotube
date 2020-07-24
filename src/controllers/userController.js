@@ -53,7 +53,6 @@ export const githubLoginCallback = async (
   const {
     _json: { id, avatar_url, name, email },
   } = profile;
-  console.log(profile);
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -93,7 +92,6 @@ export const kakaoLoginCallback = async (
       kakao_account: { email },
     },
   } = profile;
-  console.log(id, nickname, profile_image, email);
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -158,12 +156,11 @@ export const postEditProfile = async (req, res) => {
     file,
   } = req;
   try {
-    console.log(file);
     await User.findByIdAndUpdate(req.user.id, {
       name,
       email,
       description,
-      avatarUrl: file ? file.path : req.user.avatarUrl,
+      avatarUrl: file ? file.location : req.user.avatarUrl,
     });
     //file upload 시에 enctype 빼먹지 말자!!!!!!!!
     req.flash("success", "Success Edit Profile 👌👌");

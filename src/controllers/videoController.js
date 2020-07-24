@@ -8,7 +8,7 @@ export const home = async (req, res) => {
   try {
     // Video의 All Elements get
     const videos = await Video.find({}).sort({ _id: -1 }).populate("creator");
-    console.log(videos[0].creator.avatarUrl);
+    console.log(videos);
     res.render("home", { pageTitle: "Home", videos, moment });
   } catch (error) {
     console.log(error);
@@ -41,10 +41,10 @@ export const postUpload = async (req, res) => {
     files: { videoFile, thumbnail },
   } = req;
   const newVideo = await Video.create({
-    fileUrl: videoFile[0].path,
+    fileUrl: videoFile[0].location,
     title,
     description,
-    thumbnail: thumbnail[0].path,
+    thumbnail: thumbnail[0].location,
     creator: req.user.id,
   });
   req.user.videos.push(newVideo);

@@ -29,10 +29,7 @@ block content
                         
         .video__info-detail
             .video__author
-                if video.creator.avatarUrl.includes(defaultAvatarUrl)
-                    img.u-avatar(src=`${video.creator.avatarUrl}`)
-                else
-                    img.u-avatar(src=`/${video.creator.avatarUrl}`)
+                img.u-avatar(src=video.creator.avatarUrl)
                 a(href=routes.userDetail(video.creator.id))=video.creator.name
             .video__description
                 pre.video__description-text.clamp=video.description
@@ -50,10 +47,7 @@ block content
                 form.add__comment#jsAddComment
                     if loggedUser
                         .add__comment-user
-                            if loggedUser.avatarUrl.includes(defaultAvatarUrl)
-                                img.u-avatar(src=`${loggedUser.avatarUrl}`)
-                            else
-                                img.u-avatar(src=`/${loggedUser.avatarUrl}`)
+                            img.u-avatar(src=loggedUser.avatarUrl)
                             a(href=routes.userDetail(loggedUser.id))
                                 span=loggedUser.name
                         .add__comment-input
@@ -72,10 +66,7 @@ block content
                     each comment in video.comments.reverse()
                         .comment__column
                             li
-                                if comment.creator.avatarUrl.includes(defaultAvatarUrl)
-                                    img.u-avatar(src=`${comment.creator.avatarUrl}`)
-                                else
-                                    img.u-avatar(src=`/${comment.creator.avatarUrl}`)
+                                img.u-avatar(src=comment.creator.avatarUrl)
                                 .comment__detail
                                     .comment__detail-author
                                         a(href=routes.userDetail(comment.creator.id))=comment.creator.name

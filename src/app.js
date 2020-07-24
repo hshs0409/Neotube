@@ -2,6 +2,7 @@ import "core-js";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from "path";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -14,9 +15,9 @@ import routes from "./routes";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
+import apiRouter from "./routers/apiRotuer";
 
 import "./passport";
-import apiRouter from "./routers/apiRotuer";
 
 const app = express();
 
@@ -28,13 +29,12 @@ const CokieStore = MongoStore(session);
 
 app.use(helmet()); // 보안 강화
 app.set("view engine", "pug");
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
+app.set("views", path.join(__dirname, "views"));
+app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(cookieParser()); //  쿠키를 이용하여 사용자의 인증 정보같은것들 저장
 app.use(bodyParser.json()); // 웹사이트로 전달하는 정보들 검사 form 이나 json같은 형태로 된 body
 app.use(bodyParser.urlencoded({ extended: true })); // url 인코더
 app.use(morgan("dev")); //  모든 작업 log (기록)
-app.use(flash());
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
@@ -45,6 +45,7 @@ app.use(
     }),
   })
 );
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

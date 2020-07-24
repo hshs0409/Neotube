@@ -2,23 +2,20 @@ mixin videoBlock(video = {})
     .videoBlock
         a(href=routes.videoDetail(video.id))
             if video.thumbnail
-                video.videoBlock__thumbnail(src=`/${video.videoFile}`, controls=false ,poster=`/${video.thumbnail}`)
+                video.videoBlock__thumbnail(src=video.videoFile, controls=false ,poster=video.thumbnail)
             else
-                video.videoBlock__thumbnail(src=`/${video.videoFile}`, controls=false)
+                video.videoBlock__thumbnail(src=video.videoFile, controls=false)
         .videoBlock__detail
             .videoBlock__detail-column
-                if video.avatarUrl.includes(defaultAvatarUrl)
-                    img.u-avatar(src=`${video.avatarUrl}`)
-                else    
-                    img.u-avatar(src=`/${video.avatarUrl}`)
+                img.u-avatar(src=video.avatarUrl)
                 h4.videoBlock__title=video.title
             .videoBlock__detail-column
                 a(href=`${routes.userDetail(video.creatorId)}`) #{video.creatorName}
             .videoBlock__detail-column
                 if video.views === 1
                     h6.videoBlock__views#videoViews 1 view
-                    h6.videoBlock__createdAt=moment(video.createdAt).startOf('day').fromNow()
+                    h6.videoBlock__createdAt=moment(video.createdAt).startOf('minute').fromNow()
                 else
                     h6.videoBlock__views#videoViews #{video.views} views
-                    h6.videoBlock__createdAt=moment(video.createdAt).startOf('day').fromNow()
+                    h6.videoBlock__createdAt=moment(video.createdAt).startOf('minute').fromNow()
                 

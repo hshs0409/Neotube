@@ -1,6 +1,6 @@
 mixin videoPlayer(video = {})
     .videoPlayer#jsVideoPlayer
-        video(src=`/${video.src}`, poster=`/${video.thumbnail}`)
+        video(src=video.src, poster=video.thumbnail)
         .videoPlayer__progressBar
             progress.progressBar(min="0" max="100" value="0")
         .videoPlayer__controls
