@@ -1,3 +1,9 @@
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--hover);
+  }
+}
+
 .user-profile {
   width: 100%;
   display: flex;
@@ -8,9 +14,77 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 18px;
-    .profile__username {
-      font-size: 18px;
-      margin-top: 15px;
+
+    .profile-user__column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      &:nth-of-type(1) {
+        border-left: 1px solid $grey;
+        padding-left: 16px;
+        margin-left: 16px;
+      }
+      &:nth-of-type(2) {
+        margin-right: 16px;
+        margin-bottom: 12px;
+      }
+      button {
+        background-color: #3498db;
+        color: var(--color);
+        transition: 0.5s;
+        --color: #{$color};
+        --hover: #{adjust-hue($color, 45deg)};
+        &:hover,
+        &:focus {
+          border-color: var(--hover);
+          color: $white;
+        }
+        &.raise:hover {
+          box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+          transform: translateY(-0.5em);
+        }
+        &.pulse:focus {
+          animation: pulse 1s;
+          box-shadow: 0 0 0 3em rgba($pulse, 0);
+        }
+        color: $white;
+      }
+    }
+    .user-profile__column {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .u-avatar {
+        width: 128px;
+        height: 128px;
+      }
+      .profile__username {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 15px 16px;
+      }
+      .profile-detail__column {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-left: 1px solid $grey;
+        padding: 16px 48px;
+        .profile__likeNum.blind {
+          display: none;
+        }
+        h5 {
+          font-size: 24px;
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+        span {
+          font-size: 18px;
+          opacity: 0.8;
+        }
+      }
     }
   }
   .user-profile__btns {
@@ -23,5 +97,12 @@
   }
   .home-videos {
     margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .user-profile__column {
+    display: flex;
+    flex-wrap: wrap;
   }
 }

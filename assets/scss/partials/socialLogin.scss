@@ -12,6 +12,11 @@
     &:not(:last-child) {
       margin-bottom: 15px;
     }
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
     span {
       margin-right: 10px;
       font-size: 20px;
@@ -20,9 +25,21 @@
   .social-login--github {
     background-color: $black;
     color: $white;
+    border: 1px solid $white;
   }
-  .social-login--facebook {
-    background-color: #3a5998;
+  .social-login--kakao {
+    background-color: $black;
     color: $white;
+    border: 1px solid $white;
+    a {
+      font-size: 14px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 20px;
+      }
+    }
   }
 }

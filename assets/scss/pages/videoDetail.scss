@@ -96,6 +96,17 @@
           height: 40px;
           margin-bottom: 4px;
         }
+        a {
+          width: 64px;
+          max-width: 64px;
+        }
+        span {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          width: 100%;
+        }
       }
       .add__comment-input {
         width: 100%;
@@ -113,14 +124,17 @@
       }
     }
     .video__comments-list {
+      .comment__column-blind {
+        display: none;
+      }
       .comment__column {
         li {
           display: flex;
           align-items: center;
           margin-bottom: 16px;
           img {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             margin-right: 8px;
           }
@@ -143,6 +157,10 @@
               font-size: 16px;
               font-weight: 400;
             }
+          }
+          .comment__deleteBtn {
+            padding: 0;
+            background-color: none;
           }
         }
       }

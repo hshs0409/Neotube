@@ -1,13 +1,15 @@
 extends layouts/main
 
 block content
-    .form-container
-        form(action=`/users${routes.editProfile}`, method="post",enctype="multipart/form-data")
-            .fileUpload
-                label(for="avatar") Avatar
-                input(type="file", id="avatar", name="avatar" ,accept="image/*")
-            input(type="text", placeholder="Name", name="name",value=loggedUser.name)
-            input(type="email", placeholder="Email", name="email",value=loggedUser.email)
-            input(type="submit", value="Update Profile")
-        a.form-container__link(href=`/users${routes.changePassword}`)
-            button Change Password
+    .wrapper Edit Profile
+        .form-container
+            form(action=`/users${routes.editProfile}`, method="post",enctype="multipart/form-data")
+                input(type="text", placeholder="Name(max 10)", name="name",value=loggedUser.name, maxlength="10")
+                input(type="email", placeholder="Email", name="email",value=loggedUser.email)
+                input(type="text", placeholder="Description(max 20)", name="description",value=loggedUser.description , maxlength="20")
+                .fileUpload
+                    label(for="avatar") Avatar
+                    input(type="file", id="avatar", name="avatar" ,accept="image/*")
+                input(type="submit", value="Update Profile")
+            a.form-container__link(href=`/users${routes.changePassword}`)
+                button Change Password

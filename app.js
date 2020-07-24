@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import mongoose from "mongoose";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
@@ -33,6 +34,7 @@ app.use(cookieParser()); //  쿠키를 이용하여 사용자의 인증 정보�
 app.use(bodyParser.json()); // 웹사이트로 전달하는 정보들 검사 form 이나 json같은 형태로 된 body
 app.use(bodyParser.urlencoded({ extended: true })); // url 인코더
 app.use(morgan("dev")); //  모든 작업 log (기록)
+app.use(flash());
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
@@ -64,4 +66,8 @@ CONTROL = FUNCTION THAT LOOKS FOR THE DATA
 라우터들
 
 set함수는 name 과 value가 필요
+*/
+
+/*
+
 */

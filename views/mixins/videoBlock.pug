@@ -7,7 +7,10 @@ mixin videoBlock(video = {})
                 video.videoBlock__thumbnail(src=`/${video.videoFile}`, controls=false)
         .videoBlock__detail
             .videoBlock__detail-column
-                img.u-avatar(src=`/${video.avatarUrl}`)
+                if video.avatarUrl.includes(defaultAvatarUrl)
+                    img.u-avatar(src=`${video.avatarUrl}`)
+                else    
+                    img.u-avatar(src=`/${video.avatarUrl}`)
                 h4.videoBlock__title=video.title
             .videoBlock__detail-column
                 a(href=`${routes.userDetail(video.creatorId)}`) #{video.creatorName}

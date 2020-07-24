@@ -29,7 +29,10 @@ block content
                         
         .video__info-detail
             .video__author
-                img.u-avatar(src=`/${video.creator.avatarUrl}`)
+                if video.creator.avatarUrl.includes(defaultAvatarUrl)
+                    img.u-avatar(src=`${video.creator.avatarUrl}`)
+                else
+                    img.u-avatar(src=`/${video.creator.avatarUrl}`)
                 a(href=routes.userDetail(video.creator.id))=video.creator.name
             .video__description
                 pre.video__description-text.clamp=video.description
@@ -47,21 +50,39 @@ block content
                 form.add__comment#jsAddComment
                     if loggedUser
                         .add__comment-user
-                            img.u-avatar(src=`/${loggedUser.avatarUrl}`)
-                            a(href=routes.userDetail(loggedUser.id))=loggedUser.name
+                            if loggedUser.avatarUrl.includes(defaultAvatarUrl)
+                                img.u-avatar(src=`${loggedUser.avatarUrl}`)
+                            else
+                                img.u-avatar(src=`/${loggedUser.avatarUrl}`)
+                            a(href=routes.userDetail(loggedUser.id))
+                                span=loggedUser.name
                         .add__comment-input
                             input.input(type="text", placeholder="Add a comment")
                 ul.video__comments-list#jsCommentList
+                    .comment__column-blind
+                            li
+                                img.u-avatar
+                                .comment__detail
+                                    .comment__detail-author
+                                        a
+                                        span
+                                    .comment__detail-text
+                                    a
+                                        span.comment__deleteBtn ❌
                     each comment in video.comments.reverse()
                         .comment__column
                             li
-                                img.u-avatar(src=`/${comment.creator.avatarUrl}`)
+                                if comment.creator.avatarUrl.includes(defaultAvatarUrl)
+                                    img.u-avatar(src=`${comment.creator.avatarUrl}`)
+                                else
+                                    img.u-avatar(src=`/${comment.creator.avatarUrl}`)
                                 .comment__detail
                                     .comment__detail-author
                                         a(href=routes.userDetail(comment.creator.id))=comment.creator.name
-                                        span=moment(comment.createdAt).startOf('hour').fromNow()
+                                        span=moment(comment.createdAt).startOf('minute').fromNow()
                                     .comment__detail-text
                                         span=comment.text
-                                if loggedUser && video.creator.id === loggedUser.id
-                                a(href=`/api/${video.comments[0].id}/comment`)
-                                    span.comment__deleteBtn ❌
+                                if loggedUser && comment.creator.id === loggedUser.id
+                                    a(href=`/api/${comment.id}/commentDelete`)#jsDeleteBtn
+                                        span.comment__deleteBtn ❌
+                        

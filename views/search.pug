@@ -4,18 +4,37 @@ include mixins/videoBlock
 block content
     .search__header
         h3 Searching for : #{searchingBy}
-    .search__videos
-        if videos.length === 0
-            h5 No Video result
-        each video in videos
-            +videoBlock({
-                id:video.id,
-                title:video.title,
-                views:video.views,
-                videoFile:video.fileUrl,
-                thumbnail:video.thumbnail,
-                createdAt:video.createdAt,
-                creatorName:video.creator.name,
-                creatorId:video.creator.id,
-                avatarUrl:video.creator.avatarUrl
-            })
+
+    if videos.length !== 0
+        .search__videos
+            each video in videos
+                +videoBlock({
+                    id:video.id,
+                    title:video.title,
+                    views:video.views,
+                    videoFile:video.fileUrl,
+                    thumbnail:video.thumbnail,
+                    createdAt:video.createdAt,
+                    creatorName:video.creator.name,
+                    creatorId:video.creator.id,
+                    avatarUrl:video.creator.avatarUrl
+                })
+    else
+        .search__videos.noResult
+                .text
+                    p N
+                    p o
+                    p &nbsp;
+                    p V
+                    p i
+                    p d
+                    p e
+                    p o
+                    p &nbsp;
+                    p R
+                    p e
+                    p s
+                    p u
+                    p l
+                    p t
+            

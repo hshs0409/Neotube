@@ -68,7 +68,6 @@ export const videoDetail = async (req, res) => {
     res.render("videoDetail", {
       pageTitle: video.title,
       video,
-      videoComments: video.comments,
       moment,
     });
   } catch (error) {
@@ -142,16 +141,19 @@ export const postAddComment = async (req, res) => {
   const {
     params: { id },
     body: { comment },
-    user,
   } = req;
+  console.log("postAddComment");
   try {
     const video = await Video.findById(id);
+    const user = await User.findById(req.user.id);
     const newComment = await Comment.create({
       text: comment,
       creator: user.id,
     });
     video.comments.push(newComment.id);
+    user.comments.push(newComment.id);
     video.save();
+    user.save();
   } catch (error) {
     res.status(400);
   } finally {
@@ -162,11 +164,24 @@ export const postAddComment = async (req, res) => {
 export const postDeleteComment = async (req, res) => {
   const {
     params: { id },
+    body: { videoId },
   } = req;
+  const userId = req.user.id;
   try {
-    await Comment.findByIdAndDelete({ _id: id });
-    await Video.findOneAndUpdate({ _id: id });
-    await User.findOneAndUpdate({ _id: id });
+    //delete comment in Comment Schema
+    await Comment.findByIdAndRemove({ _id: id });
+
+    //delete comment in Video Schema
+    const video = await Video.findById({ _id: videoId });
+    const videoIdx = video.comments.indexOf(id);
+    video.comments.splice(videoIdx, 1);
+    video.save();
+
+    //delete comment in User Schema
+    const user = await User.findById({ _id: userId });
+    const userIdx = user.comments.indexOf(id);
+    user.comments.splice(userIdx, 1);
+    user.save();
   } catch (error) {
     res.status(400);
   } finally {

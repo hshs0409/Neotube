@@ -4,8 +4,20 @@ import passportLocalMongoose from "passport-local-mongoose";
 const UserSchema = new mongoose.Schema({
   name: String,
   email: String,
-  avatarUrl: String,
-  facebookId: Number,
+  description: {
+    type: String,
+    default: "No description",
+  },
+  avatarUrl: {
+    type: String,
+    default:
+      "https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png",
+  },
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  kakaoId: Number,
   githubId: Number,
   comments: [
     {

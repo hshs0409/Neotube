@@ -7,6 +7,8 @@ const totalTime = document.getElementById("totalTime");
 const currentTime = document.getElementById("currentTime");
 const volumeRange = document.getElementById("jsVolume");
 const views = document.querySelectorAll("#videoViews");
+const progressBar = document.querySelector(".progressBar");
+const progressField = document.querySelector(".progressField");
 const descriptionBtn = document.querySelector(".video__description-btn");
 const descriptionText = document.querySelector(".video__description-text");
 
@@ -16,7 +18,6 @@ const handleViewComma = () => {
     if (text.includes("views")) {
       text = text.replace("views", "");
       let viewsNum = text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      console.log(viewsNum);
       view.innerText = `${viewsNum} views |`;
     }
   });
@@ -137,8 +138,35 @@ function handleVolumeDrag() {
   }
 }
 
+const handleProgressBar = () => {
+  let percent = Math.floor(
+    (videoPlayer.currentTime / videoPlayer.duration) * 100
+  );
+  console.log(percent);
+  progressBar.value = percent;
+};
+
+const handleSpaceBarInput = (event) => {
+  event.preventDefault();
+  if (event.code === "Space") {
+    handlePlayClick();
+  } else if (event.code === "ArrowLeft") {
+    videoPlayer.currentTime -= 10;
+  } else if (event.code === "ArrowRight") {
+    videoPlayer.currentTime += 10;
+  }
+  setTotalTime();
+};
+
+const handleSpaceBarPrevent = (event) => {
+  if (event.keyCode == 32 && event.target == document.body) {
+    event.preventDefault();
+  }
+};
+
 function init() {
   videoPlayer.volume = 0.5; //moblile
+  videoPlayer.addEventListener("timeupdate", handleProgressBar);
   playBtn.addEventListener("click", handlePlayClick);
   volumeBtn.addEventListener("click", handleVolumeClick);
   fullScreenBtn.addEventListener("click", goFullScreen);
@@ -146,6 +174,8 @@ function init() {
   videoPlayer.addEventListener("ended", handleEnded);
   volumeRange.addEventListener("input", handleVolumeDrag);
   descriptionBtn.addEventListener("click", handleDescriptionBtn);
+  document.addEventListener("keyup", handleSpaceBarInput);
+  window.addEventListener("keydown", handleSpaceBarPrevent);
 }
 
 if (videoContainer) {

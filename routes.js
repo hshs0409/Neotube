@@ -21,17 +21,18 @@ const VIDEO_DETAIL = "/:id";
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
-// Auth (Github, Facebook)
+// Auth (Github, KAKAO)
 const GITHUB = "/auth/github";
 const GITHUB_CALLBACK = "/auth/github/callback";
-const FACEBOOK = "/auth/facebook";
-const FACEBOOK_CALLBACK = "/auth/facebook/callback";
+const KAKAO = "/auth/kakao";
+const KAKAO_CALLBACK = "/auth/kakao/callback";
 
 // API
 const API = "/api";
 const REGISTER_VIEW = "/:id/view";
 const ADD_COMMENT = "/:id/comment";
-const DELETE_COMMENT = "/:id/comment";
+const DELETE_COMMENT = "/:id/commentDelete";
+const ADD_LIKE = "/:id/like";
 
 const routes = {
   home: HOME,
@@ -76,22 +77,20 @@ const routes = {
       return DELETE_VIDEO;
     }
   },
+  //github
   gitHub: GITHUB,
   githubCallback: GITHUB_CALLBACK,
-  // me: ME,
-  facebook: FACEBOOK,
-  facebookCallback: FACEBOOK_CALLBACK,
+
+  //kakao
+  kakao: KAKAO,
+  kakaoCallback: KAKAO_CALLBACK,
+
+  //api
   api: API,
   registerView: REGISTER_VIEW,
   addComment: ADD_COMMENT,
-  // deleteComment: (id) => {
-  //   if (id) {
-  //     return `/api/${id}/delete`;
-  //   } else {
-  //     return DELETE_COMMENT;
-  //   }
-  // },
   deleteComment: DELETE_COMMENT,
+  addLike: ADD_LIKE,
 };
 
 export default routes;

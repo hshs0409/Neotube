@@ -1,10 +1,10 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github";
-import FacebookStrategy from "passport-facebook";
+import KakaoStrategy from "passport-kakao";
 import User from "./models/User";
 import {
   githubLoginCallback,
-  facebookLoginCallback,
+  kakaoLoginCallback,
 } from "./controllers/userController";
 import routes from "./routes";
 
@@ -25,13 +25,13 @@ passport.use(
 );
 
 passport.use(
-  new FacebookStrategy(
+  new KakaoStrategy(
     {
-      clientID: process.env.FACEBOOK_ID,
-      clientSecret: process.env.FACEBOOK_SECRET,
-      callbackURL: `http://localhost:4000${routes.facebookCallback}`,
+      clientID: process.env.KAKAO_ID,
+      clientSecret: "", // clientSecret을 사용하지 않는다면 넘기지 말거나 빈 스트링을 넘길 것
+      callbackURL: `http://localhost:4000${routes.kakaoCallback}`,
     },
-    facebookLoginCallback
+    kakaoLoginCallback
   )
 );
 

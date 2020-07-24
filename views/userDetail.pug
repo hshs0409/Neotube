@@ -4,14 +4,34 @@ include mixins/videoBlock
 block content
     .user-profile
         .user-profile__header
-            img.u-avatar(src=`/${user.avatarUrl}`)
-            h4.profile__username=user.name
-        if loggedUser && loggedUser.id === user.id
-            .user-profile__btns
-                a(href=`/users${routes.editProfile}`)
-                    button ✏️ Edit Profile
-                a(href=`/users${routes.changePassword}`)
-                    button 🔒 Change Password 
+            .user-profile__column
+                if user.avatarUrl.includes(defaultAvatarUrl)
+                    img.u-avatar(src=`${user.avatarUrl}`)
+                else
+                    img.u-avatar(src=`/${user.avatarUrl}`)
+                .profile-user__column
+                        h4.profile__username=user.name
+                        p.profile__description=user.description
+                .profile-user__column
+                        button.profile__likeBtn.pulse.raise Like 
+                           i.far.fa-thumbs-up
+                .profile-detail__column
+                    h5.profile__videoNum=user.videos.length
+                    span Videos
+                .profile-detail__column
+                    h5.profile__commentNum=user.comments.length
+                    span Comments
+                .profile-detail__column
+                    h5.profile__likeNum=millify(user.likes,{ precision: 2,  decimalSeparator: '.'})
+                    h5.profile__likeNum.blind=user.likes
+                    span Likes
+            .user-profile__column
+            if loggedUser && loggedUser.id === user.id
+                .user-profile__btns
+                    a(href=`/users${routes.editProfile}`)
+                        button ✏️ Edit Profile
+                    a(href=`/users${routes.changePassword}`)
+                        button 🔒 Change Password 
         .home-videos
                 each item in user.videos
                     +videoBlock({

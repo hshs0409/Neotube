@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Comfortaa:700|Roboto:900|Russo+One");
+
 .search__header {
   display: flex;
   justify-content: start;
@@ -9,7 +11,82 @@
   display: grid;
   grid-template-columns: repeat(6, minmax(150px, 1fr));
   grid-gap: 30px;
+
+  &.noResult {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @function makelongshadow($color) {
+    $val: 0px 0px $color;
+    @for $i from 1 through 150 {
+      $val: #{$val}, #{$i}px #{$i}px #{$color};
+    }
+    @return $val;
+  }
+
+  .text {
+    p {
+      margin-top: 5vh;
+      width: 45px;
+      display: inline-block;
+      font-size: 0px;
+      font-family: "Russo One";
+      font-weight: 900;
+      color: #fff;
+    }
+
+    @for $i from 1 to 16 {
+      p:nth-child(#{$i}) {
+        text-shadow: makelongshadow(adjust-hue($color, $i * 30));
+        animation: showup 5s infinite $i * 0.2s;
+      }
+    }
+
+    @keyframes showup {
+      0% {
+        font-size: 0px;
+        transform: rotate(90deg);
+      }
+      5% {
+        font-size: 60px;
+      }
+      10% {
+        font-size: 66px;
+        transform: rotate(0deg);
+      }
+      60% {
+        font-size: 66px;
+        opacity: 1;
+      }
+      71% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 0;
+        font-size: 66px;
+        transform: rotate(0deg);
+      }
+    }
+  }
+
   .videoBlock {
     grid-column: span 3;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .search__videos {
+    display: flex;
+    flex-direction: column;
+    &.noResult {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(150px, 3fr));
+      margin-left: 100px;
+    }
+    .videoBlock {
+      margin-bottom: 16px;
+    }
   }
 }
